@@ -19,12 +19,12 @@ This will install track-cli and its dependencies on your system.
 ## Usage
 Here are some common commands used in Track-CLI:
 
-Initialize a Project:
+### Initialize a Project:
 ```bash
 track init [project-name]
 ```
 
-Add a Task:
+### Add a Task:
 ```bash
 track add "Task Description" --project [project-name] --time [time-estimate] --[other-parameters]
 ```
@@ -34,27 +34,25 @@ Tracked metrics are highly flexible; you can work with whatever fields you'd lik
 track add "Emily will win survivor" --project [project-name] --probability 0.35
 ```
 
-Evaluate a Task:
+### Evaluate a Task:
 ```bash
 track eval [task-id] --project [project-name] --time [actual-time] --[other-updates]
 ```
 Note that task-id will default to the most recent task if not specified.
 
-List Tasks:
+### List Tasks:
 ```bash
 track list --project [project-name]
 ```
 
-Switch Project:
+### Switch Project:
 ```bash
 track switch [project-name]
 ```
-Visualize Data:
-```bash
-track plot --project [project-name] --type [plot-type]
-```
+### Visualize Data:
+Not yet implemented!
 
-Export Data:
+### Export Data:
 ```bash
 track export --project [project-name] --format [format] --file [filename]
 ```
