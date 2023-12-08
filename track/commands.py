@@ -6,8 +6,7 @@ from prettytable import PrettyTable
 
 def get_config():
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the directory where the current script is located
-    root_dir = os.path.join(script_dir, '..')
-    config_path = os.path.join(root_dir, 'track-cli-config.json')
+    config_path = os.path.join(script_dir, 'track-cli-config.json')
 
     if not os.path.exists(config_path):
         raise FileNotFoundError(f"Configuration file not found at {config_path}")
