@@ -5,20 +5,28 @@ import pandas as pd
 from prettytable import PrettyTable
 
 def get_config():
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Gets the directory where the current script is located
-    config_path = os.path.join(script_dir, 'track-cli-config.json')
+    # Set the default path for the config file
+    home_dir = os.path.expanduser("~")
+    default_config_path = os.path.join(home_dir, '.track-cli', 'config.json')
 
-    if not os.path.exists(config_path):
-        raise FileNotFoundError(f"Configuration file not found at {config_path}")
+    # Create the .track-cli directory if it doesn't exist
+    os.makedirs(os.path.dirname(default_config_path), exist_ok=True)
 
-    with open(config_path, 'r') as config_file:
+    # Check if the config file exists, if not, create one with default settings
+    if not os.path.isfile(default_config_path):
+        default_config = {
+            # default settings
+        }
+        with open(default_config_path, 'w') as default_config_file:
+            json.dump(default_config, default_config_file, indent=4)
+    
+    # Read and return the configuration
+    with open(default_config_path, 'r') as config_file:
         config = json.load(config_file)
-
-    # Resolve paths like "~/.track-cli"
-    if 'track_cli_dir' in config:
-        config['track_cli_dir'] = os.path.expanduser(config['track_cli_dir'])
-
+    
     return config
+
+
 
 def check_first_time_setup():
     track_cli_dir = get_config()["track_cli_dir"]
