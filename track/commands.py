@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 
@@ -7,22 +8,24 @@ from prettytable import PrettyTable
 def get_config():
     # Set the default path for the config file
     home_dir = os.path.expanduser("~")
-    default_config_path = os.path.join(home_dir, '.track-cli', 'config.json')
+    default_config_dir = os.path.join(home_dir, '.track-cli')
+    default_config_path = os.path.join(default_config_dir, 'track-cli-config.json')
 
     # Create the .track-cli directory if it doesn't exist
-    os.makedirs(os.path.dirname(default_config_path), exist_ok=True)
+    os.makedirs(default_config_dir, exist_ok=True)
 
     # Check if the config file exists, if not, create one with default settings
     if not os.path.isfile(default_config_path):
         default_config = {
             # default settings
+            "track_cli_dir": default_config_dir
         }
-        with open(default_config_path, 'w') as default_config_file:
-            json.dump(default_config, default_config_file, indent=4)
+        with open(default_config_path, 'w') as f:
+            json.dump(default_config, f, indent=4)
     
     # Read and return the configuration
-    with open(default_config_path, 'r') as config_file:
-        config = json.load(config_file)
+    with open(default_config_path, 'r') as f:
+        config = json.load(f)
     
     return config
 
@@ -73,6 +76,9 @@ def handle_add(task_description: str, project: str, **kwargs):
 
     # Assign an ID to the new task
     task_data["task_id"] = next_id
+
+    # Get a timestamp for the new task
+    task_data["time_add"] = datetime.now().strftime("%Y-%m-%d--%H:%M")
 
     # Add new task
     tasks.append(task_data)
